@@ -1,0 +1,1462 @@
+disenar_arquitectura:
+  description: >
+    Diseña la arquitectura definitiva de {project_name}.
+
+    El proyecto debe desarrollarse con Python 3.12 y PyQt6.
+
+    OBJETIVO GENERAL:
+
+    Visualizar mediante árboles y grafos los algoritmos:
+
+    BFS - búsqueda en anchura
+    DFS - búsqueda en profundidad
+
+    mediante una hormiga dentro de un laberinto.
+
+    ------------------------------------------------------------
+    LABERINTO AUTOMÁTICO
+    ------------------------------------------------------------
+
+    El usuario NO debe crear manualmente el laberinto.
+
+    Al iniciar la aplicación debe generarse automáticamente
+    un laberinto procedural.
+
+    El laberinto debe generarse inicialmente mediante:
+
+    randomized Depth First Search
+    con backtracking.
+
+    Debe comenzar como una cuadrícula llena de paredes.
+
+    DFS debe ir excavando caminos.
+
+    Después de crear el laberinto perfecto se deben abrir
+    algunas paredes internas adicionales.
+
+    Aproximadamente entre 5% y 10%.
+
+    Esto crea ciclos y rutas alternativas.
+
+    Es importante porque permite demostrar visualmente
+    diferencias entre BFS y DFS.
+
+    ------------------------------------------------------------
+    ELEMENTOS DEL TABLERO
+    ------------------------------------------------------------
+
+    Debe generarse automáticamente:
+
+    1 hormiga
+
+    entre 5 y 7 comidas
+
+    1 salida
+
+    paredes
+
+    caminos transitables
+
+    Ninguna entidad puede aparecer sobre una pared.
+
+    Ninguna comida puede coincidir con otra.
+
+    Ninguna comida puede coincidir con la hormiga.
+
+    Ninguna comida puede coincidir con la salida.
+
+    Todas las comidas deben ser alcanzables.
+
+    La salida debe ser alcanzable.
+
+    ------------------------------------------------------------
+    GRAFO
+    ------------------------------------------------------------
+
+    El tablero debe modelarse como:
+
+    grafo no dirigido
+    y no ponderado.
+
+    Cada celda transitable es un nodo.
+
+    Cada conexión ortogonal válida es una arista.
+
+    No deben existir movimientos diagonales.
+
+    ------------------------------------------------------------
+    COMPORTAMIENTO DE LA HORMIGA
+    ------------------------------------------------------------
+
+    Inicialmente existen de 5 a 7 comidas.
+
+    El algoritmo seleccionado debe buscar cualquiera
+    de las comidas restantes.
+
+    remaining_foods debe almacenar los objetivos pendientes.
+
+    La condición de objetivo será:
+
+    current in remaining_foods
+
+    Cuando se encuentra una comida:
+
+    se reconstruye el camino
+
+    la hormiga recorre visualmente el camino
+
+    la comida desaparece
+
+    se elimina de remaining_foods
+
+    la posición inicial pasa a ser esa comida
+
+    comienza una nueva búsqueda
+
+    Este proceso continúa hasta que:
+
+    len(remaining_foods) == 0
+
+    Solamente entonces debe comenzar:
+
+    búsqueda hacia la salida.
+
+    ------------------------------------------------------------
+    INTERFAZ
+    ------------------------------------------------------------
+
+    Debe incluir:
+
+    tablero visual
+
+    selector BFS / DFS
+
+    botón Iniciar
+
+    botón Pausar
+
+    botón Reanudar
+
+    botón Reiniciar búsqueda
+
+    botón Nuevo laberinto
+
+    control de velocidad
+
+    estadísticas
+
+    árbol de búsqueda
+
+    contador de comidas
+
+    Debe mostrar estados como:
+
+    Buscando comida
+
+    Comida encontrada
+
+    Buscando siguiente comida
+
+    Todas las comidas recogidas
+
+    Buscando salida
+
+    Completado
+
+    ------------------------------------------------------------
+    VISUALIZACIÓN
+    ------------------------------------------------------------
+
+    Mostrar:
+
+    paredes
+
+    pasillos
+
+    hormiga
+
+    comidas
+
+    salida
+
+    nodos visitados
+
+    nodo actual
+
+    frontera
+
+    camino final
+
+    árbol de padres
+
+    comidas recogidas
+
+    comidas restantes
+
+    nodos explorados
+
+    longitud acumulada del recorrido.
+
+  expected_output: >
+    Documento técnico completo con clases, arquitectura,
+    responsabilidades, estados, flujo de datos y criterios
+    de aceptación.
+
+disenar_algoritmos:
+  description: >
+    Diseña rigurosamente los algoritmos del proyecto.
+
+    ------------------------------------------------------------
+    GENERACIÓN DEL LABERINTO
+    ------------------------------------------------------------
+
+    Implementa conceptualmente:
+
+    Randomized DFS con backtracking.
+
+    El tablero empieza lleno de paredes.
+
+    Seleccionar una celda inicial válida.
+
+    Utilizar una pila.
+
+    En cada iteración:
+
+    consultar vecinos separados por dos posiciones.
+
+    seleccionar aleatoriamente uno no visitado.
+
+    eliminar la pared situada entre ambos.
+
+    marcarlo como visitado.
+
+    agregarlo a la pila.
+
+    Si no existen vecinos:
+
+    realizar backtracking mediante pop().
+
+    El resultado debe ser un laberinto conectado.
+
+    Después:
+
+    abrir aleatoriamente entre 5% y 10% de las paredes
+    internas adecuadas.
+
+    Esto debe producir ciclos.
+
+    ------------------------------------------------------------
+    REPRESENTACIÓN DEL GRAFO
+    ------------------------------------------------------------
+
+    El laberinto debe convertirse en:
+
+    G = (V, E)
+
+    V:
+
+    todas las celdas transitables.
+
+    E:
+
+    conexiones ortogonales entre celdas transitables.
+
+    Grafo:
+
+    no dirigido
+    no ponderado.
+
+    ------------------------------------------------------------
+    COMIDAS
+    ------------------------------------------------------------
+
+    Debe utilizarse:
+
+    random.randint(5, 7)
+
+    para determinar la cantidad.
+
+    Seleccionar posiciones transitables únicas.
+
+    ------------------------------------------------------------
+    SEARCH RESULT
+    ------------------------------------------------------------
+
+    Define SearchResult con:
+
+    success
+
+    path
+
+    parents
+
+    explored_order
+
+    explored_nodes_count
+
+    found_target
+
+    ------------------------------------------------------------
+    BFS MULTIOBJETIVO
+    ------------------------------------------------------------
+
+    Recibe:
+
+    start: Node
+
+    targets: Set[Node]
+
+    Debe usar:
+
+    collections.deque
+
+    como cola FIFO.
+
+    La condición de éxito:
+
+    current in targets
+
+    Debe marcar nodos correctamente para evitar duplicados.
+
+    BFS debe garantizar encontrar la comida con menor
+    distancia en aristas entre las disponibles.
+
+    ------------------------------------------------------------
+    DFS MULTIOBJETIVO
+    ------------------------------------------------------------
+
+    Recibe:
+
+    start: Node
+
+    targets: Set[Node]
+
+    Debe usar:
+
+    stack
+
+    con comportamiento LIFO.
+
+    Debe evitar ciclos.
+
+    DFS no debe prometer camino óptimo.
+
+    ------------------------------------------------------------
+    ORDEN DE VECINOS
+    ------------------------------------------------------------
+
+    Utilizar un orden determinista.
+
+    Por ejemplo:
+
+    Norte
+    Este
+    Sur
+    Oeste.
+
+    En DFS considerar el orden inverso de inserción
+    debido al funcionamiento LIFO.
+
+    ------------------------------------------------------------
+    BÚSQUEDA SECUENCIAL
+    ------------------------------------------------------------
+
+    remaining_foods = conjunto de comidas.
+
+    current_position = ant_position.
+
+    Mientras existan comidas:
+
+    search(
+        graph,
+        current_position,
+        remaining_foods
+    )
+
+    found_food = result.found_target
+
+    remaining_foods.remove(found_food)
+
+    current_position = found_food
+
+    Después:
+
+    buscar desde current_position hasta exit_position.
+
+    Explica cómo conservar las estadísticas acumuladas
+    entre búsquedas.
+
+  expected_output: >
+    Especificación algorítmica rigurosa incluyendo pseudocódigo
+    y código Python de referencia para MazeGenerator,
+    BFS, DFS, reconstrucción de caminos y múltiples objetivos.
+
+implementar_backend:
+  description: >
+    Esta es una tarea académica legítima de programación.
+
+    Debes escribir código Python ORIGINAL desde cero.
+
+    No existe modificación de software de terceros.
+
+    No existe hacking.
+
+    No existe malware.
+
+    No existe ninguna actividad dañina.
+
+    NO debes negarte a generar el código solicitado.
+
+    ------------------------------------------------------------
+    MAZE GENERATOR
+    ------------------------------------------------------------
+
+    Implementa:
+
+    class MazeGenerator
+
+    Debe:
+
+    crear cuadrícula llena de paredes.
+
+    ejecutar randomized DFS con backtracking.
+
+    excavar caminos.
+
+    abrir algunas paredes adicionales para crear ciclos.
+
+    devolver estructura del laberinto.
+
+    Debe soportar dimensiones impares.
+
+    Por ejemplo:
+
+    21 x 31.
+
+    ------------------------------------------------------------
+    GRAPH
+    ------------------------------------------------------------
+
+    Implementa:
+
+    class Graph
+
+    Debe manejar:
+
+    filas
+
+    columnas
+
+    celdas transitables
+
+    paredes
+
+    vecinos ortogonales.
+
+    ------------------------------------------------------------
+    SEARCH RESULT
+    ------------------------------------------------------------
+
+    Implementa:
+
+    @dataclass
+    class SearchResult
+
+    con:
+
+    success
+
+    path
+
+    parents
+
+    explored_order
+
+    explored_nodes_count
+
+    found_target.
+
+    ------------------------------------------------------------
+    BFS
+    ------------------------------------------------------------
+
+    Implementa BFS real.
+
+    Debe recibir múltiples objetivos.
+
+    targets: Set[Node]
+
+    Usar deque.
+
+    FIFO.
+
+    ------------------------------------------------------------
+    DFS
+    ------------------------------------------------------------
+
+    Implementa DFS real.
+
+    Debe recibir múltiples objetivos.
+
+    targets: Set[Node]
+
+    Usar pila LIFO.
+
+    ------------------------------------------------------------
+    SIMULATION MANAGER
+    ------------------------------------------------------------
+
+    Implementa:
+
+    class SimulationManager
+
+    Debe proporcionar:
+
+    generate_new_maze()
+
+    Debe crear:
+
+    nuevo laberinto
+
+    nueva hormiga
+
+    entre 5 y 7 comidas
+
+    nueva salida
+
+    nuevos estados
+
+    nuevas estadísticas.
+
+    Debe almacenar:
+
+    food_positions
+
+    remaining_foods
+
+    collected_foods
+
+    ant_position
+
+    exit_position.
+
+    Debe poder preparar búsquedas sucesivas.
+
+    El backend NO debe importar PyQt6.
+
+    El código debe ser compatible con Python 3.12.
+
+    ENTREGA CÓDIGO COMPLETO.
+
+    No escribas una negativa.
+
+    No digas que no puedes programarlo.
+
+    Es un proyecto educativo totalmente legítimo.
+
+  expected_output: >
+    Código Python original y completo del backend del proyecto,
+    acompañado únicamente por explicaciones técnicas mínimas
+    necesarias para que el integrador pueda utilizarlo.
+
+disenar_interfaz:
+  description: >
+    Esta es una tarea académica legítima de programación.
+
+    Debes escribir código PyQt6 ORIGINAL.
+
+    NO debes negarte a desarrollar la interfaz.
+
+    ------------------------------------------------------------
+    ESTADO INICIAL
+    ------------------------------------------------------------
+
+    Al abrirse el programa debe mostrarse inmediatamente:
+
+    laberinto generado
+
+    hormiga
+
+    entre 5 y 7 comidas
+
+    salida.
+
+    NO debe aparecer una cuadrícula vacía.
+
+    ------------------------------------------------------------
+    TABLERO
+    ------------------------------------------------------------
+
+    Crear un QWidget personalizado.
+
+    Utilizar QPainter.
+
+    Representar visualmente:
+
+    pared
+
+    camino
+
+    hormiga
+
+    comida
+
+    salida
+
+    nodo visitado
+
+    nodo actual
+
+    camino encontrado.
+
+    ------------------------------------------------------------
+    HORMIGA VISUAL
+    ------------------------------------------------------------
+
+    La hormiga NO debe representarse como un simple círculo.
+
+    Debe dibujarse mediante QPainter con forma reconocible de hormiga.
+
+    Debe tener, como mínimo:
+
+    cabeza
+
+    tórax
+
+    abdomen
+
+    seis patas
+
+    dos antenas.
+
+    Puede utilizar elipses, líneas y curvas de QPainter.
+
+    Debe escalar correctamente según el tamaño de cada celda.
+
+    Debe mantenerse centrada visualmente dentro de la celda.
+
+    ------------------------------------------------------------
+    ARRASTRAR Y SOLTAR LA HORMIGA
+    ------------------------------------------------------------
+
+    El usuario debe poder agarrar la hormiga con el mouse,
+    arrastrarla y soltarla en otra celda válida.
+
+    Implementar:
+
+    mousePressEvent
+
+    mouseMoveEvent
+
+    mouseReleaseEvent
+
+    El flujo debe ser:
+
+    1. Detectar si el usuario presionó sobre la celda donde está
+       actualmente la hormiga.
+
+    2. Activar un estado interno de arrastre.
+
+    3. Mientras el mouse se mueve, mostrar visualmente la hormiga
+       desplazándose hacia la celda bajo el cursor.
+
+    4. Al soltar el mouse, comprobar si la posición es válida.
+
+    Una posición válida debe cumplir:
+
+    - no ser pared
+    - estar dentro del tablero
+    - no contener comida
+    - no contener la salida
+
+    Si la posición es válida:
+
+    actualizar ant_position.
+
+    Si la posición NO es válida:
+
+    devolver visualmente la hormiga a su posición anterior.
+
+    ------------------------------------------------------------
+    SEGURIDAD DE ESTADOS
+    ------------------------------------------------------------
+
+    La hormiga solamente puede arrastrarse cuando la simulación
+    NO está ejecutándose.
+
+    Mientras BFS o DFS estén activos:
+
+    desactivar drag and drop de la hormiga.
+
+    No se debe permitir modificar ant_position durante una búsqueda.
+
+    Si la simulación está:
+
+    pausada
+
+    o ejecutándose,
+
+    la posición inicial debe mantenerse estable hasta reiniciar.
+
+    ------------------------------------------------------------
+    CURSOR
+    ------------------------------------------------------------
+
+    Cuando el cursor esté sobre la hormiga:
+
+    utilizar un cursor tipo mano.
+
+    Mientras se arrastra:
+
+    utilizar ClosedHandCursor o equivalente.
+
+    Al soltar:
+
+    volver al cursor normal.
+
+    ------------------------------------------------------------
+    CONTROLES
+    ------------------------------------------------------------
+
+    Agregar:
+
+    selector BFS / DFS
+
+    Iniciar
+
+    Pausar
+
+    Reanudar
+
+    Reiniciar búsqueda
+
+    Nuevo laberinto
+
+    velocidad.
+
+    ------------------------------------------------------------
+    NUEVO LABERINTO
+    ------------------------------------------------------------
+
+    El botón Nuevo laberinto debe llamar:
+
+    manager.generate_new_maze()
+
+    y refrescar completamente la interfaz.
+
+    La hormiga debe volver a poder arrastrarse después
+    de generar un nuevo laberinto.
+
+    ------------------------------------------------------------
+    PANEL DE ESTADO
+    ------------------------------------------------------------
+
+    Mostrar:
+
+    algoritmo
+
+    fase
+
+    estado
+
+    comidas recogidas
+
+    comidas totales
+
+    comidas restantes
+
+    nodos explorados
+
+    longitud acumulada.
+
+    Ejemplo:
+
+    Comidas: 3 / 6
+
+    Estado: Buscando siguiente comida
+
+    ------------------------------------------------------------
+    ÁRBOL
+    ------------------------------------------------------------
+
+    Utilizar QTreeWidget.
+
+    Mostrar las relaciones:
+
+    Padre
+      Hijo
+
+    creadas durante la búsqueda.
+
+    ------------------------------------------------------------
+    ANIMACIÓN
+    ------------------------------------------------------------
+
+    Usar QTimer.
+
+    NO usar time.sleep() en UI.
+
+    La animación debe mostrar progresivamente:
+
+    exploración
+
+    camino
+
+    movimiento de hormiga.
+
+    Durante el movimiento automático de la hormiga por un
+    camino encontrado no debe estar habilitado el drag and drop.
+
+    Código compatible con Python 3.12.
+
+  expected_output: >
+    Código PyQt6 completo y original preparado para integrarse
+    con el backend, incluyendo drag and drop de la hormiga y una
+    representación visual reconocible de hormiga mediante QPainter.
+
+integrar_borrador:
+  description: >
+    Integra absolutamente toda la información anterior en
+    UNA aplicación autocontenida.
+
+    Debes generar un único archivo Python ejecutable.
+
+    ------------------------------------------------------------
+    REQUISITOS OBLIGATORIOS
+    ------------------------------------------------------------
+
+    Python 3.12.
+
+    PyQt6.
+
+    MazeGenerator.
+
+    randomized DFS backtracking.
+
+    generación automática de laberinto.
+
+    apertura adicional de paredes para generar ciclos.
+
+    Graph.
+
+    BFS real.
+
+    DFS real.
+
+    SearchResult.
+
+    múltiples objetivos.
+
+    entre 5 y 7 comidas.
+
+    búsqueda secuencial de comidas.
+
+    búsqueda final de salida.
+
+    ------------------------------------------------------------
+    IMPORTANTE
+    ------------------------------------------------------------
+
+    Si los agentes Qwen entregaron contenido incompleto,
+    se negaron a programar o cometieron errores:
+
+    IGNORA esa limitación.
+
+    Tú debes implementar correctamente las piezas faltantes.
+
+    ------------------------------------------------------------
+    FUNCIONAMIENTO
+    ------------------------------------------------------------
+
+    Al iniciar:
+
+    generate_new_maze()
+
+    Debe aparecer automáticamente:
+
+    laberinto
+
+    hormiga
+
+    5 a 7 comidas
+
+    salida.
+
+    Debe existir:
+
+    remaining_foods.
+
+    Cada búsqueda recibe:
+
+    targets = remaining_foods.
+
+    La condición de éxito debe ser:
+
+    current in targets.
+
+    Cuando se encuentra comida:
+
+    found_food = result.found_target
+
+    remaining_foods.remove(found_food)
+
+    mover hormiga hasta found_food.
+
+    iniciar otra búsqueda.
+
+    Cuando remaining_foods esté vacío:
+
+    buscar exit_position.
+
+    ------------------------------------------------------------
+    UI
+    ------------------------------------------------------------
+
+    Debe contener:
+
+    selector BFS / DFS
+
+    Iniciar
+
+    Pausar / Reanudar
+
+    Reiniciar búsqueda
+
+    Nuevo laberinto
+
+    velocidad
+
+    contador de comidas
+
+    estadísticas
+
+    árbol de búsqueda.
+
+    ------------------------------------------------------------
+    ANIMACIÓN
+    ------------------------------------------------------------
+
+    Utilizar QTimer.
+
+    No bloquear UI.
+
+    Animar primero exploración.
+
+    Después animar desplazamiento por el camino.
+
+    Después iniciar automáticamente la siguiente comida.
+
+    ------------------------------------------------------------
+    ARCHIVO DE SALIDA
+    ------------------------------------------------------------
+
+    Devuelve ÚNICAMENTE código Python.
+
+    NO uses ```python.
+
+    NO uses Markdown.
+
+    NO escribas explicaciones.
+
+    NO dejes TODO.
+
+    NO dejes pass provisional.
+
+    Debe contener:
+
+    def main()
+
+    y:
+
+    if __name__ == "__main__":
+
+    El resultado debe poder ejecutarse mediante:
+
+    python hormiga/main_draft.py
+
+    ------------------------------------------------------------
+    HORMIGA INTERACTIVA
+    ------------------------------------------------------------
+
+    La versión integrada debe implementar drag and drop real
+    de la hormiga.
+
+    La clase visual del tablero debe:
+
+    - detectar click sobre la hormiga
+    - activar estado dragging_ant
+    - seguir el movimiento del cursor
+    - validar la celda al soltar
+    - actualizar ant_position solamente si la celda es válida
+    - restaurar posición anterior si la celda no es válida
+
+    La hormiga no puede soltarse:
+
+    - sobre paredes
+    - sobre comidas
+    - sobre la salida
+    - fuera del tablero
+
+    El drag and drop debe estar bloqueado mientras una búsqueda
+    BFS o DFS esté ejecutándose.
+
+    ------------------------------------------------------------
+    DIBUJO DE HORMIGA
+    ------------------------------------------------------------
+
+    La hormiga debe dibujarse con QPainter.
+
+    No utilizar únicamente:
+
+    - círculo simple
+    - cuadrado
+    - texto genérico
+
+    Debe ser una figura compuesta con:
+
+    - cabeza
+    - tórax
+    - abdomen
+    - 6 patas
+    - 2 antenas
+
+    El dibujo debe escalar según el tamaño de la celda.
+
+    La misma representación de hormiga debe utilizarse tanto
+    mientras está quieta como mientras es arrastrada.
+
+  expected_output: >
+    Código Python 3.12 y PyQt6 completo,
+    autocontenido y ejecutable.
+
+probar_sistema:
+  description: >
+    Audita exhaustivamente hormiga/main_draft.py.
+
+    Comprueba:
+
+    1. Sintaxis Python correcta.
+
+    2. Imports válidos.
+
+    3. Laberinto automático.
+
+    4. Laberinto conectado.
+
+    5. MazeGenerator utiliza DFS aleatorio.
+
+    6. Existen ciclos adicionales.
+
+    7. Grafo no dirigido.
+
+    8. Grafo no ponderado.
+
+    9. Movimientos únicamente ortogonales.
+
+    10. BFS utiliza FIFO.
+
+    11. BFS utiliza deque.
+
+    12. BFS obtiene objetivo cercano en número de aristas.
+
+    13. DFS utiliza LIFO.
+
+    14. DFS evita ciclos.
+
+    15. DFS no promete optimalidad.
+
+    16. El laberinto aparece automáticamente al abrir.
+
+    17. Existen exactamente entre 5 y 7 comidas.
+
+    18. Las comidas no aparecen sobre paredes.
+
+    19. Las comidas no se superponen.
+
+    20. Hormiga no coincide con comida.
+
+    21. Salida no coincide con comida.
+
+    22. Todas las comidas son alcanzables.
+
+    23. Salida alcanzable.
+
+    24. SearchResult tiene found_target.
+
+    25. remaining_foods funciona.
+
+    26. Una comida desaparece al ser recogida.
+
+    27. Contador de comidas se actualiza.
+
+    28. Después de una comida empieza automáticamente otra búsqueda.
+
+    29. Se recogen todas las comidas.
+
+    30. La salida no se busca antes de recogerlas todas.
+
+    31. Después de todas las comidas se busca salida.
+
+    32. Botón Nuevo laberinto funciona.
+
+    33. Nuevo laberinto cambia distribución.
+
+    34. Nuevo laberinto vuelve a crear 5 a 7 comidas.
+
+    35. Reiniciar búsqueda no genera accidentalmente otro laberinto.
+
+    36. Pausa funciona.
+
+    37. Reanudar funciona.
+
+    38. No existe time.sleep en el hilo de UI.
+
+    39. QTimer controla animación.
+
+    40. Árbol de búsqueda refleja parents.
+
+    41. Estadísticas correctas.
+
+    42. El cambio BFS / DFS funciona antes de comenzar.
+
+    43. Botones no producen estados inconsistentes.
+
+    44. No hay errores si se genera un laberinto nuevo después
+        de finalizar una simulación.
+
+    45. La hormiga tiene una forma visual reconocible.
+
+    46. La hormiga posee cabeza, tórax y abdomen.
+
+    47. La hormiga posee seis patas.
+
+    48. La hormiga posee dos antenas.
+
+    49. El dibujo escala correctamente con la celda.
+
+    50. Se puede hacer click sobre la hormiga.
+
+    51. La hormiga puede arrastrarse con el mouse.
+
+    52. La hormiga puede soltarse en una celda transitable válida.
+
+    53. ant_position se actualiza después de un drop válido.
+
+    54. No puede soltarse sobre una pared.
+
+    55. No puede soltarse sobre comida.
+
+    56. No puede soltarse sobre la salida.
+
+    57. No puede soltarse fuera del tablero.
+
+    58. Un drop inválido conserva la posición anterior.
+
+    59. El drag and drop está bloqueado durante BFS.
+
+    60. El drag and drop está bloqueado durante DFS.
+
+    61. El drag and drop vuelve a habilitarse después de
+        reiniciar o generar un nuevo laberinto.
+
+    62. La animación automática de la hormiga no entra en
+        conflicto con el drag manual.
+
+    Debes localizar errores concretos.
+
+    Para cada uno indica:
+
+    problema
+
+    gravedad
+
+    causa
+
+    corrección.
+
+  expected_output: >
+    Informe QA exhaustivo antes de la entrega final.
+
+corregir_y_finalizar:
+  description: >
+    Produce la versión FINAL del proyecto.
+
+    Debes utilizar:
+
+    arquitectura
+
+    algoritmos
+
+    backend
+
+    interfaz
+
+    borrador
+
+    reporte QA.
+
+    Debes CORREGIR todos los problemas detectados.
+
+    ------------------------------------------------------------
+    REQUISITOS FINALES
+    ------------------------------------------------------------
+
+    Aplicación Python 3.12.
+
+    PyQt6.
+
+    Un solo archivo.
+
+    Laberinto generado automáticamente.
+
+    Randomized DFS para generación.
+
+    Backtracking real.
+
+    Ciclos adicionales.
+
+    Entre 5 y 7 comidas.
+
+    Distribución aleatoria.
+
+    Todas las entidades en caminos válidos.
+
+    BFS real.
+
+    DFS real.
+
+    Grafo no dirigido.
+
+    Grafo no ponderado.
+
+    Búsqueda multiobjetivo.
+
+    found_target.
+
+    remaining_foods.
+
+    collected_foods.
+
+    Recolección secuencial.
+
+    Salida solamente después de todas las comidas.
+
+    ------------------------------------------------------------
+    UI
+    ------------------------------------------------------------
+
+    Laberinto visible inmediatamente.
+
+    Botón Nuevo laberinto.
+
+    Selector BFS / DFS.
+
+    Iniciar.
+
+    Pausar / Reanudar.
+
+    Reiniciar búsqueda.
+
+    Control de velocidad.
+
+    Contador:
+
+    X / Y comidas.
+
+    Estado textual.
+
+    Estadísticas.
+
+    Árbol de búsqueda.
+
+    ------------------------------------------------------------
+    VISUAL
+    ------------------------------------------------------------
+
+    Debe distinguir claramente:
+
+    paredes
+
+    caminos
+
+    hormiga
+
+    comida
+
+    salida
+
+    visitados
+
+    nodo actual
+
+    camino.
+
+    ------------------------------------------------------------
+    ESTABILIDAD
+    ------------------------------------------------------------
+
+    No utilizar time.sleep en UI.
+
+    Usar QTimer.
+
+    Evitar crashes.
+
+    Validar estados.
+
+    ------------------------------------------------------------
+    SALIDA
+    ------------------------------------------------------------
+
+    Devuelve SOLAMENTE código Python válido.
+
+    NO uses Markdown.
+
+    NO uses ```.
+
+    NO expliques nada.
+
+    NO dejes TODOs.
+
+    NO dejes código incompleto.
+
+    Debe incluir main().
+
+    Debe funcionar ejecutando:
+
+    python hormiga/main.py
+
+    ------------------------------------------------------------
+    DRAG AND DROP FINAL
+    ------------------------------------------------------------
+
+    La versión final DEBE permitir al usuario:
+
+    hacer click sobre la hormiga
+
+    arrastrarla
+
+    soltarla en otra celda transitable.
+
+    Solo deben aceptarse celdas válidas.
+
+    Un drop inválido debe conservar la posición anterior.
+
+    Debe actualizarse correctamente:
+
+    ant_position
+
+    antes de comenzar una nueva simulación.
+
+    El drag debe estar deshabilitado mientras la simulación
+    esté ejecutándose.
+
+    ------------------------------------------------------------
+    REPRESENTACIÓN FINAL DE LA HORMIGA
+    ------------------------------------------------------------
+
+    La hormiga debe dibujarse directamente mediante QPainter.
+
+    Debe ser visualmente reconocible y contener:
+
+    1 cabeza
+
+    1 tórax
+
+    1 abdomen
+
+    6 patas
+
+    2 antenas.
+
+    Debe escalar proporcionalmente a la celda.
+
+    No entregar una hormiga representada únicamente
+    mediante un círculo simple.
+
+  expected_output: >
+    Código Python final completo,
+    corregido y listo para entregar.
+
+generar_readme:
+  description: >
+    Genera el README FINAL del Desafío de la Hormiga.
+
+    Debe incluir:
+
+    título
+
+    objetivo
+
+    requisitos
+
+    instalación
+
+    ejecución
+
+    descripción de interfaz
+
+    generación procedural de laberintos
+
+    randomized DFS
+
+    grafos
+
+    nodos
+
+    aristas
+
+    BFS
+
+    DFS
+
+    diferencias BFS vs DFS
+
+    múltiples comidas
+
+    remaining_foods
+
+    búsqueda secuencial
+
+    búsqueda de salida
+
+    árbol de búsqueda
+
+    estadísticas
+
+    agentes CrewAI utilizados.
+
+    Explica los seis agentes:
+
+    arquitecto
+
+    especialista de grafos
+
+    backend Qwen
+
+    PyQt Qwen
+
+    tester
+
+    integrador.
+
+    Incluye una sección:
+
+    "Explicación"
+
+    La explicación debe mencionar que DFS se utiliza:
+
+    1. para generar proceduralmente el laberinto
+
+    y además:
+
+    2. como posible estrategia de búsqueda de la hormiga.
+
+    Explica que BFS usa una cola FIFO.
+
+    Explica que DFS usa una pila LIFO.
+
+    Explica que el tablero se transforma en un grafo
+    no dirigido y no ponderado.
+
+  expected_output: >
+    README.md completo listo para acompañar la entrega.

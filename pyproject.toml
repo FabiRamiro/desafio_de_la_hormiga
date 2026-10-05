@@ -1,0 +1,26 @@
+[project]
+name = "taller_crewai"
+version = "0.1.0"
+description = "taller_crewai using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai-tools>=1.15.22",
+    "crewai[tools]>=1.15.22,<2.0.0",
+]
+
+[project.scripts]
+taller_crewai = "taller_crewai.main:run"
+run_crew = "taller_crewai.main:run"
+train = "taller_crewai.main:train"
+replay = "taller_crewai.main:replay"
+test = "taller_crewai.main:test"
+run_with_trigger = "taller_crewai.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+project_id = "ef6ce725-3f17-4c58-8f64-bcaf5dee0f34"
